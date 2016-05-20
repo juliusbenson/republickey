@@ -3,7 +3,7 @@
     "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000", 
     "difficulty": "0x4000", 
     "alloc": {},
-    "coinbase": "0xb00223c746493b23063c5a839c92a8f69c260642", 
+    "coinbase": "make sure to use your own etherbase address", 
     "timestamp": "0x00", 
     "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000", 
     "extraData": "Custem Ethereum Genesis Block", 
