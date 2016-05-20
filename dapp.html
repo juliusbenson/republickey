@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>JavaScript API</title>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	</head>
+	<body>
+		<div class="header">
+		<h3>JavaScript API</h3>
+		</div>
+		<div class="jumbotron">
+			<h5>Coinbase Address: <strong id="coinbase"></strong></h5>
+			<h5>Balance: <strong id="balance"></strong></h5>
+			<h5>Latest Block Number: <strong id="latestBlock"></strong></h5>
+			<h5>Latest Block Timestamp: <strong id="latestBlockTimestamp"></strong></h5>
+			<h5>Latest Block Hash: <strong id="latestBlockHash"></strong></h5>
+			<h5>Contract String: <strong id="contractString"></strong></h5>
+			<h5>Favourite Python: <strong id="favouritePython"></strong></h5>
+			<br></br>
+		</div>
+	</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="web3.min.js"></script>
+	<script type="text/javascript">
+		var Web3 = require('web3');
+		var web3 = new Web3();
+		web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+		var coinbase = web3.eth.coinbase;
+		console.log(web3);
+		document.getElementById("coinbase").innerText = coinbase;
+		///First web3.eth.watch code to monitor coinbase
+		///Insert your contract address var here:
+		///Second web3.eth.watch code to monitor block number
+	</script>
+</html>
