@@ -6,18 +6,10 @@
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	</head>
 	<body>
-		<div class="header">
-		<h3>JavaScript API</h3>
-		</div>
-		<div class="jumbotron">
-			<h5>Coinbase Address: <strong id="coinbase"></strong></h5>
-			<h5>Balance: <strong id="balance"></strong></h5>
-			<h5>Latest Block Number: <strong id="latestBlock"></strong></h5>
-			<h5>Latest Block Timestamp: <strong id="latestBlockTimestamp"></strong></h5>
-			<h5>Latest Block Hash: <strong id="latestBlockHash"></strong></h5>
-			<h5>Contract String: <strong id="contractString"></strong></h5>
-			<h5>Favourite Python: <strong id="favouritePython"></strong></h5>
-			<br></br>
+		<div style="margin:1em; padding-left:1em; border-style:dotted; border-width:1px;">
+			<h3>Web3 dashboard</h3>
+			<p>Coinbase Address: <strong id="coinbase"></strong></p>
+			<p>Greeter greeting: <strong id="greeting"></strong></p>
 		</div>
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -27,11 +19,11 @@
 		var Web3 = require('web3');
 		var web3 = new Web3();
 		web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
-		var coinbase = web3.eth.coinbase;
-		console.log(web3);
-		document.getElementById("coinbase").innerText = coinbase;
-		///First web3.eth.watch code to monitor coinbase
-		///Insert your contract address var here:
-		///Second web3.eth.watch code to monitor block number
+		// Setting up the contract interface so we can call methods in javascript...
+		var greeterContract = web3.eth.contract([{"constant":false,"inputs":[],"name":"kill","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"greet","outputs":[{"name":"","type":"string"}],"type":"function"},{"inputs":[{"name":"_greeting","type":"string"}],"type":"constructor"}]);
+		// Address specific to my private testnet
+		var greeterInstance = greeterContract.at("0x19af46696a54011a7641fa8e37cf5ce93eacc63b");
+		document.getElementById("coinbase").innerText = web3.eth.coinbase;
+		document.getElementById("greeting").innerText = greeterInstance.greet();
 	</script>
 </html>
