@@ -1,12 +1,11 @@
 {
-    "nonce": "0x0000000000000042", 
+    "nonce": "0x0000006125328687", 
     "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000", 
     "difficulty": "0x4000", 
     "alloc": {},
-    "coinbase": "make sure to use your own etherbase address", 
+    "coinbase": "0xf4e4670d540ab36821426df6ecd16ccd538c743e", 
     "timestamp": "0x00", 
     "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000", 
-    "extraData": "Custem Ethereum Genesis Block", 
+    "extraData": "Custom Ethereum Genesis Block", 
     "gasLimit": "0xffffffff"
 }
-
