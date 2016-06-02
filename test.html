@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Landing Page</title>
+	</head>
+	<body>
+		<form action="action.php" method="post">
+			<p>Coinbase Address: <span id="coinbase"></span></p>
+			<p>Incumbent hash: <input type="text" id="hash" name="hash" /></p>
+			<p><input type="submit" /></p>
+		</form>
+	</body>
+	<script src="web3.min.js"></script>
+	<script type="text/javascript">
+		var Web3 = require('web3');
+		var web3 = new Web3();
+		web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+		// Setting up the contract interface so we can call methods in javascript...
+		var greeterContract = web3.eth.contract([{"constant":false,"inputs":[],"name":"kill","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"greet","outputs":[{"name":"","type":"string"}],"type":"function"},{"inputs":[{"name":"_greeting","type":"string"}],"type":"constructor"}]);
+		// Address specific to my private testnet
+		var greeterInstance = greeterContract.at("0x19af46696a54011a7641fa8e37cf5ce93eacc63b");
+		document.getElementById("coinbase").innerText = web3.eth.coinbase;
+		document.getElementById("hash").value = greeterInstance.greet();
+	</script>
+</html>
