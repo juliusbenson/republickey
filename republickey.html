@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Landing Page</title>
+	</head>
+	<body>
+		Coinbase Address: [<span id="coinbase"></span>]<br/>
+		Target Hash: [<span id="hash"></span>]<br/>
+		<input type="text" id="vote"/>&nbsp;
+		<button type="button" onclick="setVote()">Vote</button>&nbsp;
+		<button type="button" onclick="recount()">Recount</button><hr/>
+	</body>
+	<script src="web3.min.js"></script>
+	<script src="md5.min.js"></script>
+	<script type="text/javascript">
+		var Web3 = require('web3');
+		var web3 = new Web3();
+		web3.setProvider(new web3.providers.HttpProvider('http://localhost:8545'));
+		web3.eth.defaultAccount = web3.eth.coinbase;
+		var republickeyContract = web3.eth.contract([{"constant":false,"inputs":[{"name":"proposalVotedOn","type":"bytes32"}],"name":"Set","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"Count","outputs":[],"type":"function"},{"constant":false,"inputs":[],"name":"Get","outputs":[{"name":"proposalWinner","type":"bytes32"}],"type":"function"},{"inputs":[{"name":"voterList","type":"address[]"}],"type":"constructor"}]);
+		var republickeyInstance = republickeyContract.at("0x5e38d7e6565007cf421b6b1d0b942fa6b1228371"); // Address specific to my private testnet
+		document.getElementById("coinbase").innerText = web3.eth.coinbase;
+		
+		var targetHash = republickeyInstance.Get()
+		document.getElementById("hash").innerText = targetHash;
+		
+		loadProposal(targetHash);
+		
+		// AJAX call to .php file that queries the republickey database with the given hash
+		function loadProposal(targetHash) {
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					displayProposal(targetHash, xhttp.responseText);
+				}
+			};
+			xhttp.open("GET", "ajax.php?hash=" + targetHash, true);
+			xhttp.send();
+		}
+		
+		// Displays text from server if its hash matches the one we asked for
+		function displayProposal(targetHash, sourceHtml) {
+			var div = document.createElement('div');
+			var sourceHash = md5(sourceHtml);
+			if (targetHash == sourceHash) {
+				div.innerHTML = sourceHtml;
+			}
+			else {
+				div.innerHTML = "<span>Hash mismatch.<br/>Target hash: [" + targetHash + "]<br/>Source hash: [" + sourceHash + "]</span>";
+			}
+			while (div.children.length > 0) {
+				document.body.appendChild(div.children[0]);
+			}
+		}
+	</script>
+</html>
